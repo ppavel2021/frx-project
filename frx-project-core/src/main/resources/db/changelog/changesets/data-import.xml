@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    
+    <changeSet id="create-data-table" author="ppakhmutov" runAlways="true">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists schemaName="public" tableName="frx_data"/>
+            </not>
+        </preConditions>
+        <createTable tableName="frx_data" schemaName="public">
+            <column name="ticker" type="varchar(255)"/>
+            <column name="period" type="int"/>
+            <column name="date" type="varchar(255)"/>
+            <column name="time" type="varchar(255)"/>
+            <column name="open" type="float8"/>
+            <column name="high" type="float8"/>
+            <column name="low" type="float8"/>
+            <column name="close" type="float8"/>
+            <column name="vol" type="int"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fill-data-table" author="ppakhmutov" runOnChange="true">
+        <preConditions>
+            <tableExists schemaName="public" tableName="frx_data"/>
+        </preConditions>
+        <loadUpdateData schemaName="public"
+                        tableName="frx_data"
+                        primaryKey="ticker,date,time"
+                        file="/db/changelog/changesets/EURUSD_210601_210620.csv">
+            <column header="&lt;TICKER&gt;" name="ticker" type="STRING"/>
+            <column header="&lt;PER&gt;" name="period" type="NUMERIC"/>
+            <column header="&lt;DATE&gt;" name="date" type="STRING"/>
+            <column header="&lt;TIME&gt;" name="time" type="STRING"/>
+            <column header="&lt;OPEN&gt;" name="open" type="NUMERIC"/>
+            <column header="&lt;HIGH&gt;" name="high" type="NUMERIC"/>
+            <column header="&lt;LOW&gt;" name="low" type="NUMERIC"/>
+            <column header="&lt;CLOSE&gt;" name="close" type="NUMERIC"/>
+            <column header="&lt;VOL&gt;" name="vol" type="NUMERIC"/>
+        </loadUpdateData>
+    </changeSet>
+
+</databaseChangeLog>
