@@ -1,4 +1,4 @@
-package com.frxprj;
+package com.frxprj.utils;
 
 import java.io.IOException;
 import javax.servlet.Filter;

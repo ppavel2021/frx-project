@@ -1,8 +1,10 @@
-package com.frxprj;
+package com.frxprj.controllers;
 
 import java.util.List;
 import java.util.ArrayList;
 
+import com.frxprj.model.DataItem;
+import com.frxprj.repository.DataItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.http.ResponseEntity;
