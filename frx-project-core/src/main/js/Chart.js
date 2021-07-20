@@ -34,10 +34,11 @@ class CandleStickChartWithMA extends React.Component {
 		const sma20 = sma()
 			.options({ windowSize: 10 })
 			.merge((d, c) => {d.sma20 = c;})
+			.stroke("#4682B4")
 			.accessor(d => d.sma20);
 
 		const smaVolume50 = sma()
-			.options({ windowSize: 2, sourcePath: "volume" })
+			.options({ windowSize: 10, sourcePath: "volume" })
 			.merge((d, c) => {d.smaVolume50 = c;})
 			.accessor(d => d.smaVolume50)
 			.stroke("#4682B4")
@@ -56,11 +57,11 @@ class CandleStickChartWithMA extends React.Component {
 		} = xScaleProvider(calculatedData);
 
 		const start = xAccessor(last(data));
-		const end = xAccessor(data[Math.max(0, data.length - 150)]);
+		const end = xAccessor(data[Math.max(0, data.length - 1500)]);
 		const xExtents = [start, end];
 
 		return (
-			<ChartCanvas height={600}
+			<ChartCanvas height={700}
 						 width={width}
 						 ratio={ratio}
 						 margin={{ left: 70, right: 70, top: 10, bottom: 30 }}
@@ -83,17 +84,18 @@ class CandleStickChartWithMA extends React.Component {
 					<MouseCoordinateY
 						at="right"
 						orient="right"
-						displayFormat={format(".2f")} />
+						displayFormat={format(".3f")} />
 
 					<CandlestickSeries />
 					<LineSeries yAccessor={sma20.accessor()} stroke={sma20.stroke()}/>
 
 					<CurrentCoordinate yAccessor={sma20.accessor()} fill={sma20.stroke()} />
 
-					<OHLCTooltip origin={[-40, 0]}/>
+					<OHLCTooltip origin={[-40, 0]} ohlcFormat={format(".4f")}/>
 					<MovingAverageTooltip
 						onClick={e => console.log(e)}
 						origin={[-38, 15]}
+						displayFormat={format(".4f")}
 						options={[
 							{
 								yAccessor: sma20.accessor(),

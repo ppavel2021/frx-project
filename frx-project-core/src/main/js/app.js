@@ -8,7 +8,7 @@ import styled from "styled-components";
 const Tab = styled.button`
   padding: 5px 10px;
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.4;
   background: white;
   border: 0;
   outline: 0;
@@ -18,6 +18,7 @@ const Tab = styled.button`
 	active &&
 	`
     opacity: 1;
+    color: blue;
   `}
 `;
 
